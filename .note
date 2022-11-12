@@ -1,0 +1,50 @@
+# -----------------
+
+// Defined in C++ code
+void GetDeployDir(char *output);
+
+# -----------------
+
+void IdentifyVersion(void)
+{
+	char *doomwad = NULL;
+	char *doomwaddir = malloc(256);
+
+	GetDeployDir(doomwaddir);
+
+	// Registered.
+	doomwad = malloc(strlen(doomwaddir) + 1 + 8 + 1);
+	sprintf(doomwad, "%s/doom.wad", doomwaddir);
+
+	sprintf(basedefault, "doomrc");
+
+	if (!access(doomwad, R_OK))
+	{
+		gamemode = registered;
+		D_AddFile(doomwad);
+		return;
+	}
+
+	printf("Game mode indeterminate.\n");
+	gamemode = indetermined;
+
+	// We don't abort. Let's see what the PWAD contains.
+	// exit(1);
+	// I_Error ("Game mode indeterminate\n");
+}
+
+
+# -----------------
+
+void (*loop_hook)();
+
+void D_SetLoopHook(void (*hook)())
+{
+	loop_hook = hook;
+}
+
+
+# -----------------
+
+// Call C++ Loop Hook
+loop_hook();
