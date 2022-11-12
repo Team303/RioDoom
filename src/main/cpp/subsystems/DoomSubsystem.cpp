@@ -87,7 +87,7 @@ void DoomSubsystem::UpdateMat()
 			// Get pixel
 			cv::Vec3b &color = mat.at<cv::Vec3b>(y, x);
 
-			// Copy the values from the screen buffer
+			// Copy the values from the screen buffer (BGR order bc ¯\_(ツ)_/¯)
 			color[0] = palette[paletteIndex * 3 + 2];
 			color[1] = palette[paletteIndex * 3 + 1];
 			color[2] = palette[paletteIndex * 3 + 0];
